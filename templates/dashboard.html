@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fraud Detection Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>Fraud Detection Dashboard</h1>
+
+<div class="grid">
+
+    <!-- ******** SINGLE TRANSACTION ******** -->
+    <div class="card">
+        <h2>Single Transaction Prediction</h2>
+
+        <form method="post" action="/predict_single">
+
+            <input type="number" step="0.01" name="amount" placeholder="Transaction Amount" required>
+
+            <input type="number" step="0.1" name="time" placeholder="Time (seconds)" required>
+
+            <textarea name="description" placeholder="Transaction description (optional)"></textarea>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if single_result %}
+            <div class="result">
+                <p><b>Prediction:</b> {{ single_result["prediction"] }}</p>
+                <p><b>Final Score:</b> {{ single_result["final_score"] }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- ******** BULK CSV ******** -->
+    <div class="card">
+        <h2>Bulk CSV Upload</h2>
+
+        <form method="post" action="/predict_file" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload & Predict</button>
+        </form>
+
+        {% if fraud is defined and legit is defined %}
+            <div class="result">
+                <p><b>Total Fraudulent:</b> {{ fraud }}</p>
+                <p><b>Total Legitimate:</b> {{ legit }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>

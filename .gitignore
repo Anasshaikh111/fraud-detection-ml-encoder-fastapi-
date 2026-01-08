@@ -1,0 +1,9 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pkl
+*.joblib
+*.h5
+*.csv
+.DS_Store
